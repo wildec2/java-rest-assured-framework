@@ -23,7 +23,7 @@ public class BookingApiTests {
 
     @Test(description = "post booking 201s")
     public void postBookingReturns201(){
-        BookingDates dates = new BookingDates(LocalDate.of( 2022, 03, 1), LocalDate.of( 2022, 3, 4));
+        BookingDates dates = new BookingDates(LocalDate.of( 2022, 3, 1), LocalDate.of( 2022, 3, 4));
         Booking payload = new Booking( 1, "Colum", "Wilde", true, dates, "Breakfast");
 
         Response response = BookingApi.postBooking(payload);
