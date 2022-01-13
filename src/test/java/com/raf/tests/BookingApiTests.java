@@ -24,7 +24,7 @@ public class BookingApiTests extends BaseTest{
 
     @Test(description = "post booking 201s")
     public void postBookingReturns201(){
-        Booking payload = getBookingPayload(LocalDate.of(2023, 5, 7), LocalDate.of(2023, 5, 8));
+        Booking payload = getBookingPayload(LocalDate.of(2024, 11, 7), LocalDate.of(2024, 11, 8));
 
         Response response = BookingApi.postBooking(payload);
 
@@ -33,7 +33,7 @@ public class BookingApiTests extends BaseTest{
 
     @Test(description = "delete booking 202s")
     public void deleteBookingReturns202() {
-        Booking payload = getBookingPayload(LocalDate.of(2023, 4, 11), LocalDate.of(2023, 4, 14));
+        Booking payload = getBookingPayload(LocalDate.of(2024, 7, 11), LocalDate.of(2024, 7, 14));
 
         BookingResponse createdBookingResponse = BookingApi.postBooking(payload).as(BookingResponse.class);
 

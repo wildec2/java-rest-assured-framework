@@ -13,7 +13,7 @@ public class BaseTest {
     public void dataSetUp() {
         token = getAdminToken();
     }
-
+    
     public static String getAdminToken() {
         Auth auth = new Auth("admin", "password");
         Response authResponse = AuthApi.postAuth(auth);
