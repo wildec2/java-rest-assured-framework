@@ -24,8 +24,7 @@ public class BookingApiTests extends BaseTest{
 
     @Test(description = "post booking 201s")
     public void postBookingReturns201(){
-        BookingDates dates = new BookingDates(LocalDate.of(2023, 7, 1), LocalDate.of(2023, 7, 4));
-        Booking payload = new Booking( 1, "Colum", "Wilde", true, dates, "Breakfast");
+        Booking payload = getBookingPayload(2023, 11, 4, 2023, 11, 5);
 
         Response response = BookingApi.postBooking(payload);
 
@@ -34,13 +33,17 @@ public class BookingApiTests extends BaseTest{
 
     @Test(description = "delete booking 202s")
     public void deleteBookingReturns202() {
-        BookingDates dates = new BookingDates(LocalDate.of(2023, 8, 21), LocalDate.of(2023, 8, 22));
-        Booking payload = new Booking( 1, "Colum", "Wilde", true, dates, "Breakfast");
+        Booking payload = getBookingPayload(2023, 11, 7, 2023, 11, 9);
 
         BookingResponse createdBookingResponse = BookingApi.postBooking(payload).as(BookingResponse.class);
 
         Response deleteResponse = BookingApi.deleteBooking(createdBookingResponse.getBookingid(), token);
 
         assertThat("Incorrect response code", deleteResponse.getStatusCode(), is(202));
+    }
+
+    private Booking getBookingPayload(int checkInYear, int checkInMonth, int checkInDay, int checkOutYear, int checkOutMonth, int checkOutDay) {
+        BookingDates dates = new BookingDates(LocalDate.of(checkInYear, checkInMonth, checkInDay), LocalDate.of(checkOutYear, checkOutMonth, checkOutDay));
+        return new Booking(1, "Colum", "Wilde", true, dates, "Breakfast");
     }
 }
