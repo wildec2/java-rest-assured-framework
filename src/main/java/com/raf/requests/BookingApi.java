@@ -8,11 +8,11 @@ import static io.restassured.RestAssured.given;
 
 public class BookingApi extends BaseApi{
 
-    private static final String apiUrl = String.format("%sbooking/", baseUrl);
+    private static final String API_URL = String.format("%sbooking/", BASE_URL);
 
     public static Response getBookings(){
         return given()
-                .get(apiUrl);
+                .get(API_URL);
     }
 
     public static Response postBooking(Booking payload) {
@@ -20,12 +20,12 @@ public class BookingApi extends BaseApi{
                 .contentType(ContentType.JSON)
                 .body(payload)
                 .when()
-                .post(apiUrl);
+                .post(API_URL);
     }
 
     public static Response deleteBooking(int id, String tokenValue) {
         return given()
                 .header("Cookie", "token=" + tokenValue)
-                .delete(apiUrl + Integer.toString(id));
+                .delete(API_URL + Integer.toString(id));
     }
 }
