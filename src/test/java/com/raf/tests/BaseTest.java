@@ -1,4 +1,4 @@
-package com.raf.payloads.tests;
+package com.raf.tests;
 
 import com.raf.payloads.requests.Auth;
 import com.raf.requests.AuthApi;

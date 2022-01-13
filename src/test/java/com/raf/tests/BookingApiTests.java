@@ -1,4 +1,4 @@
-package com.raf.payloads.tests;
+package com.raf.tests;
 
 import com.raf.payloads.requests.Booking;
 import com.raf.payloads.requests.BookingDates;
