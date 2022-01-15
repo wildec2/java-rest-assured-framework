@@ -29,13 +29,13 @@ pipeline{
 
  	post{
  	    always{
-            allure([
-                includeProperties: false,
-                jdk              : '',
-                properties       : [],
-                reportBuildPolicy: 'ALWAYS',
-                results          : [[path: 'build/allure-results']]
-            ])
+//             allure([
+//                 includeProperties: false,
+//                 jdk              : '',
+//                 properties       : [],
+//                 reportBuildPolicy: 'ALWAYS',
+//                 results          : [[path: 'build/allure-results']]
+//             ])
  	    }
  	}
 }
