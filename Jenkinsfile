@@ -22,7 +22,7 @@ pipeline{
         }
         stage ('Run Tests'){
             steps{
-                sh "./gradlew test -DbaseUrl=${baseUrl}"
+                sh "gradle test -DbaseUrl=${baseUrl}"
             }
         }
  	}
