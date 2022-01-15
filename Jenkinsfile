@@ -35,7 +35,7 @@ pipeline{
                 properties       : [],
                 reportBuildPolicy: 'ALWAYS',
                 results          : [[path: 'build/allure-results']]
-            )
+            ])
  	    }
  	}
 }
