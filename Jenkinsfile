@@ -29,7 +29,6 @@ pipeline{
 
  	post{
  	    always{
- 	    step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
             allure([
                 includeProperties: false,
                 properties       : [],
