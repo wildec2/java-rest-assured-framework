@@ -26,7 +26,96 @@ Several things are tied together to allow us to make requests against out api un
 define our tests and report the results. Each are outlined here and how they work together to create the conditions under which the tests are run.
 
 ## Gradle
-build details
+**Plugins**
+
+Applying the following plugins to the project allows us to extend the project’s capabilities.
+```
+plugins {
+    id 'java'
+    id 'io.qameta.allure' version '2.9.6'
+    id 'io.freefair.lombok' version '6.3.0'
+}
+```
+1. The java plugin adds Java compilation along with testing and bundling capabilities to the project.
+2. The allure plugin is for building Allure reports for TestNG(or other test frameworks such as JUnit or Spock).
+3. The lombok plugin is for annotation processing and compiling.
+
+
+**Compatibility Options**
+
+```
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+```
+
+* sourceCompatibility is Java version compatibility to use when compiling Java source.
+* targetCompatibility is Java version to generate classes for.
+
+
+**Repositories**
+
+The repositories for which our project resolves its dependencies.
+```
+repositories {
+    mavenCentral()
+    google()
+}
+```
+See the [gradle documentation](https://docs.gradle.org/current/userguide/declaring_repositories.html) for more information around other repositories 
+and setting up custom repositories.
+
+
+**Dependencies**
+
+The things that supports in building our project.
+```
+dependencies {
+    implementation(
+            'io.rest-assured:rest-assured:4.4.0',
+            'com.fasterxml.jackson.core:jackson-databind:2.13.1',
+            'com.fasterxml.jackson.core:jackson-core:2.13.1',
+            'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.1',
+            'org.hamcrest:hamcrest:2.2',
+            'io.qameta.allure:allure-testng:2.17.2',
+            'io.qameta.allure:allure-rest-assured:2.17.2'
+    )
+    testImplementation(
+            'org.testng:testng:7.5'
+    )
+}
+```
+1. rest-assured: for all rest-assured commands.
+2. jackson: for serialisation and deserialization.
+3. hamcrest: for the hamcrest matchers used in our assertions.
+4. allure: allure and testng configuration.
+5. testng: for use of testng framework.
+
+
+**Allure**
+
+For configuring allure. Here we are only pass the version parameter but there are many parameters for configuration.
+```
+allure {
+    version = '2.17.2'
+}
+```
+
+**Test**
+
+The task to run our tests and specifying the test configuration.
+
+```
+test {
+    systemProperties System.getProperties()
+    systemProperties.remove("java.endorsed.dirs")
+    scanForTestClasses = false
+    useTestNG() {
+        useDefaultListeners = true
+    }
+    testLogging.showStandardStreams = true
+}
+```
+
 
 ## Rest Assured
 requests, payloads and pojo details
