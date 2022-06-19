@@ -11,7 +11,6 @@ public class AuthApi extends BaseApi {
     @Step("login request")
     public Response postAuth(Auth payload) {
         return requestSender.body(payload)
-                .when()
                 .post(PATH);
     }
 }

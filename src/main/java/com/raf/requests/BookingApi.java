@@ -10,21 +10,18 @@ public class BookingApi extends BaseApi {
 
     @Step("get booking request")
     public Response getBookings(){
-        return requestSender.when()
-            .get(PATH);
+        return requestSender.get(PATH);
     }
 
     @Step("post booking request")
     public Response postBooking(Booking payload) {
         return requestSender.body(payload)
-                .when()
                 .post(PATH);
     }
 
     @Step("delete booking request")
     public Response deleteBooking(int id, String tokenValue) {
         return requestSender.header("Cookie", "token=" + tokenValue)
-                .when()
-                .delete(PATH + Integer.toString(id));
+                .delete(PATH + id);
     }
 }

@@ -118,7 +118,7 @@ test {
 
 
 ## Rest Assured
-BaseApi.java specifies how are the requests are made. 
+BaseApi.java specifies how are the requests are made using Rest-Assureds RequestSpecification.
 ```
 RequestSpecification requestSpecification = new RequestSpecBuilder()
             .setBaseUri(BASE_URL)
@@ -127,23 +127,61 @@ RequestSpecification requestSpecification = new RequestSpecBuilder()
             .build();
 ```
 
-Here we specify the BASE_URL to be used by all our requests. 
-This is a system variable that can be passed in when we build the project, so we can run on any environment.
-Our content type is always set to JSON.
-And we add a filter that enables requests/responses to be logged in our allure report.
+Here we specify the BASE_URL to be used by all our requests. This is a system variable that can be passed in when we build the project, so we can run on any environment.
+```
+./gradlew test -DbaseUrl=http://www.MY_URL.com/
+```
+Our content type is always set to JSON. And we add a filter that enables requests/responses to be logged in our allure report.
+We then create a RequestSpecification object and say we'll use the RequestSpecification outlined above thus alleviating the need for rest-assured given() method to be littered throughout our tests.
+```
+protected RequestSpecification requestSender = RestAssured.given(requestSpecification);
+```
+I try to avoid using the given(), when() and then rest assured methods in my tests as I don't think it's readable. Every api class that we create to make requests with now extent this so our code will be much cleaner.
+```
+public Response postBooking(Booking payload) {
+   return requestSender.body(payload)
+                       .post(PATH);
+}
+```
+
 See RequestSpecification documentation for more details.
 
-Now that specified how requests are set up and made to make one we ...
-
-payloads ... 
-
-pojo details ...
+The payloads for requests are POJOs. As are our request responses. 
+```
+@JsonProperty
+private int roomid;
+```
+This is where jackson is used to serialize/deserialize respectively. Ensure the variable name matches that which is required in the payload or seen in the api response.
+There are ways to rename to what you wish. To deserialize we use the rest-assured 'as' function and pass in the desired POJO class.
+```
+BookingResponse createdBookingResponse = bookingApi.postBooking(payload).as(BookingResponse.class);
+```
+This allows us to work with the java defined in the class. Typically, the getters. In the response POJOs note the use of the lombok '@Getter' annotation.
+This is used, so we don't have to write getter boilerplate code. 'createdBookingResponse.' and you'll see all the getter.
 
 ## TestNG
-the tests
+The tests live in the test module. Every class of tests will extend the BaseTest.java class which will house items common to all.
+TestNG is the test runner. Simply create a method in one of the test classes and annotate with @Test the TestNG library.
+```
+@Test(description = "get bookings 200s")
+public void getBookingShouldReturn200(){
+   Response response = bookingApi.getBookings();
+
+   assertThat("Incorrect response code", response.getStatusCode(), is(200));
+}
+```
+Hamcrest matchers and assertions are then used to compare actual and expected results.
 
 ## Allure
-steps, logging requests and the final report details
+Each request is annotated, so we'll have a readable description in our final allure report.
+```
+@Step("get booking request")
+```
+As mentioned, the allure filter is added to the request spec in BaseApi.java. Now every rest-assured request, response and cURL will appear under the step.
+```
+.addFilter(new AllureRestAssured())
+```
+To view the final report run 'gradle allureServe'
 
 ## Jenkins
 set up details

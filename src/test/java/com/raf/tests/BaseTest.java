@@ -7,7 +7,7 @@ import org.testng.annotations.BeforeSuite;
 
 public class BaseTest {
 
-    AuthApi authApi = new AuthApi();
+    protected AuthApi authApi = new AuthApi();
     protected String token;
 
     @BeforeSuite
