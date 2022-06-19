@@ -4,30 +4,27 @@ import com.raf.payloads.requests.Booking;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
-import static io.restassured.RestAssured.given;
-
 public class BookingApi extends BaseApi {
 
-    private static final String PATH = "booking/";
+    private final String PATH = "booking/";
 
     @Step("get booking request")
-    public static Response getBookings(){
-        return given(requestSpecification)
-                .get(PATH);
+    public Response getBookings(){
+        return requestSender.when()
+            .get(PATH);
     }
 
     @Step("post booking request")
-    public static Response postBooking(Booking payload) {
-        return given(requestSpecification)
-                .body(payload)
+    public Response postBooking(Booking payload) {
+        return requestSender.body(payload)
                 .when()
                 .post(PATH);
     }
 
     @Step("delete booking request")
-    public static Response deleteBooking(int id, String tokenValue) {
-        return given(requestSpecification)
-                .header("Cookie", "token=" + tokenValue)
+    public Response deleteBooking(int id, String tokenValue) {
+        return requestSender.header("Cookie", "token=" + tokenValue)
+                .when()
                 .delete(PATH + Integer.toString(id));
     }
 }

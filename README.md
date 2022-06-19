@@ -87,8 +87,8 @@ dependencies {
 1. rest-assured: for all rest-assured commands.
 2. jackson: for serialisation and deserialization.
 3. hamcrest: for the hamcrest matchers used in our assertions.
-4. allure: allure and testng configuration.
-5. testng: for use of testng framework.
+4. allure: allure report and testng configuration.
+5. testng: for use of testng framework as our test runner.
 
 
 **Allure**
@@ -118,7 +118,26 @@ test {
 
 
 ## Rest Assured
-requests, payloads and pojo details
+BaseApi.java specifies how are the requests are made. 
+```
+RequestSpecification requestSpecification = new RequestSpecBuilder()
+            .setBaseUri(BASE_URL)
+            .setContentType(ContentType.JSON)
+            .addFilter(new AllureRestAssured())
+            .build();
+```
+
+Here we specify the BASE_URL to be used by all our requests. 
+This is a system variable that can be passed in when we build the project, so we can run on any environment.
+Our content type is always set to JSON.
+And we add a filter that enables requests/responses to be logged in our allure report.
+See RequestSpecification documentation for more details.
+
+Now that specified how requests are set up and made to make one we ...
+
+payloads ... 
+
+pojo details ...
 
 ## TestNG
 the tests

@@ -15,9 +15,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class BookingApiTests extends BaseTest{
 
+    BookingApi bookingApi = new BookingApi();
+
     @Test(description = "get bookings 200s")
     public void getBookingShouldReturn200(){
-        Response response = BookingApi.getBookings();
+        Response response = bookingApi.getBookings();
 
         assertThat("Incorrect response code", response.getStatusCode(), is(200));
     }
@@ -26,7 +28,7 @@ public class BookingApiTests extends BaseTest{
     public void postBookingReturns201(){
         Booking payload = getBookingPayload(LocalDate.of(2024, 11, 7), LocalDate.of(2024, 11, 8));
 
-        Response response = BookingApi.postBooking(payload);
+        Response response = bookingApi.postBooking(payload);
 
         assertThat("Incorrect response code", response.getStatusCode(), is(201));
     }
@@ -35,9 +37,9 @@ public class BookingApiTests extends BaseTest{
     public void deleteBookingReturns202() {
         Booking payload = getBookingPayload(LocalDate.of(2024, 7, 11), LocalDate.of(2024, 7, 14));
 
-        BookingResponse createdBookingResponse = BookingApi.postBooking(payload).as(BookingResponse.class);
+        BookingResponse createdBookingResponse = bookingApi.postBooking(payload).as(BookingResponse.class);
 
-        Response deleteResponse = BookingApi.deleteBooking(createdBookingResponse.getBookingid(), token);
+        Response deleteResponse = bookingApi.deleteBooking(createdBookingResponse.getBookingid(), token);
 
         assertThat("Incorrect response code", deleteResponse.getStatusCode(), is(202));
     }
