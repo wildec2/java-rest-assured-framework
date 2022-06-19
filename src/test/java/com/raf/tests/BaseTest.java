@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeSuite;
 
 public class BaseTest {
 
+    protected AuthApi authApi = new AuthApi();
     protected String token;
 
     @BeforeSuite
@@ -14,9 +15,9 @@ public class BaseTest {
         token = getAdminToken();
     }
     
-    public static String getAdminToken() {
+    public String getAdminToken() {
         Auth auth = new Auth("admin", "password");
-        Response authResponse = AuthApi.postAuth(auth);
+        Response authResponse = authApi.postAuth(auth);
         return authResponse.getCookie("Token");
     }
 }
