@@ -18,6 +18,6 @@ public class BaseTest {
     public String getAdminToken() {
         Auth auth = new Auth("admin", "password");
         Response authResponse = authApi.postAuth(auth);
-        return authResponse.getCookie("Token");
+        return authResponse.getCookie("token");
     }
 }
